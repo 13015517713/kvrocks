@@ -177,7 +177,7 @@ Status Server::Start() {
   // setup server cron thread
   cron_thread_ = GET_OR_RET(util::CreateThread("server-cron", [this] { this->cron(); }));
 
-  compaction_checker_thread_ = GET_OR_RET(util::CreateThread("compact-check", [this] {
+  compaction_checker_thread_ = GET_OR_RET(util::CreateThread("compact-check", [this] { // 这个可以浓缩到cron线程中
     uint64_t counter = 0;
     int64_t last_compact_date = 0;
     CompactionChecker compaction_checker{this->storage};
